@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "691687395016",
+    "project_id": "projeto-construagro",
+    "storage_bucket": "projeto-construagro.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691687395016:android:9db5a6e7896ad1d8c15ffd",
+        "android_client_info": {
+          "package_name": "com.example.construagro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5nWMWGNsOX2YX-6KDsVFz53I26Ndic5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

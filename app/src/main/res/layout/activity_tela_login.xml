@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- está função criar um scroll na tela -->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".Tela_Login">
+
+    <!-- logo da empresa no topo da tela -->
+    <ImageView
+        android:id="@+id/Logo_empresa"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/nova_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!-- quadrado branco atrás do login e senha -->
+    <View
+        android:id="@+id/container"
+        style="@style/ContainerComponents"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Logo_empresa"
+        />
+
+    <!-- onde o usuario vai colocar o login -->
+    <EditText
+        android:id="@+id/login_usuario"
+        android:hint="Usúario"
+        android:drawableEnd="@drawable/ic_person"
+        style="@style/Edit_text"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@id/container"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintTop_toTopOf="@id/container"
+        />
+
+    <!-- onde o usuario vai colocar a senha -->
+    <EditText
+        android:id="@+id/login_senha"
+        android:hint="Senha"
+        android:drawableEnd="@drawable/ic_eye"
+        style="@style/Edit_text"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@id/container"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintTop_toBottomOf="@id/login_usuario"
+        />
+
+    <!-- botão de acesso -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Button_Entrar"
+        style="@style/Button"
+        app:layout_constraintTop_toBottomOf="@id/login_senha"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/Entrar"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        />
+
+    <!-- botao de criar cadastro -->
+    <TextView
+        android:id="@+id/Criar_cadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        android:text="Criar Cadastro"
+        android:textColor="#FFFFFF" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:indeterminateTint="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Criar_cadastro" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
