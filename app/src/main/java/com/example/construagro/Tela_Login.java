@@ -55,6 +55,8 @@ public class Tela_Login extends AppCompatActivity {
             }
         });
 
+        //BOTÃO DE ENTRAR
+
         Button_Entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,12 +102,13 @@ public class Tela_Login extends AppCompatActivity {
         }
     }
 
+    //Se o login for sucedido, ir para próxima tela
     private void LoginComEmail(String email, String senha, View v){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         progressBar.setVisibility(View.VISIBLE);
-                        Intent intent = new Intent(Tela_Login.this, Tela_Usuario.class);
+                        Intent intent = new Intent(Tela_Login.this, Tela_Menu.class);
                         startActivity(intent);
                     } else {
                         mostrarErro(v, "Usuário ou senha inválidos!");
@@ -113,7 +116,7 @@ public class Tela_Login extends AppCompatActivity {
                 });
     }
 
-    //metodo para que o usuario conectado, permaneca conectado depois de logar mesmo sem fechar o aplicativo
+    //metodo para que o usuario conectado, permaneca conectado depois de logar mesmo se fechar o aplicativo
     private void mostrarErro(View v, String mensagem){
         Snackbar snackbar = Snackbar.make(v, mensagem, Snackbar.LENGTH_SHORT);
         snackbar.setBackgroundTint(Color.WHITE);

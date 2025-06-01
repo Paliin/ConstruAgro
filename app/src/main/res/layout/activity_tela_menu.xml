@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/DarkBlue"
+        app:title=""
+        app:titleTextColor="@android:color/white"/>
+
+    <!-- Conteúdo principal -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp">
+
+        <!-- SearchView -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/Text_Pesquisar_Itens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="Pesquisar itens..."
+            android:background="@android:color/white" />
+
+        <!-- RecyclerView para listar os itens -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_itens"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"/>
+    </LinearLayout>
+
+    <!-- Floating Action Button -->
+    <ImageButton
+        android:id="@+id/Button_Menu_Rapido"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:background="@drawable/circle_button_background"
+        android:padding="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cruz_branca_botao_menu"
+        android:contentDescription="Adicionar Item" />
+
+    <LinearLayout
+        android:id="@+id/layout_menu_popup"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_menu_popup"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/opcao_cadastrar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Cadastrar Item"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <TextView
+            android:id="@+id/opcao_saida"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Saída de Itens"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <TextView
+            android:id="@+id/opcao_relatorio"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Relatórios"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+    </LinearLayout>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

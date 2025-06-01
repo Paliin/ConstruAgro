@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
+    android:background="@drawable/estilo_background_login"
     tools:context=".Tela_Cadastro">
 
     <TextView
@@ -87,6 +87,7 @@
         android:layout_height="150dp"
         app:layout_constraintBottom_toTopOf="@id/Texto_dados_usuario"
         android:src="@drawable/ic_person"
+        android:tint="@color/white"
 
         />
 
