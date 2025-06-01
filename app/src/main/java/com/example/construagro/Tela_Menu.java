@@ -108,17 +108,17 @@ public class Tela_Menu extends AppCompatActivity {
 
         opcaoCadastrar.setOnClickListener(v -> {
             layoutMenuPopup.setVisibility(View.GONE);
-            // TODO: abrir tela de cadastro
+
         });
 
         opcaoSaida.setOnClickListener(v -> {
             layoutMenuPopup.setVisibility(View.GONE);
-            // TODO: abrir tela de saída
+
         });
 
         opcaoRelatorio.setOnClickListener(v -> {
             layoutMenuPopup.setVisibility(View.GONE);
-            // TODO: abrir tela de relatório
+
         });
 
 
