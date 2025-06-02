@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@android:color/white"/>
+            android:background="@android:color/white" />
     </LinearLayout>
 
     <!-- Floating Action Button -->
@@ -68,11 +68,11 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="Cadastrar Item"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/opcao_saida"
