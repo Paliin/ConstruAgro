@@ -26,6 +26,13 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/editTextValor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor"
+            android:inputType="numberDecimal" />
+
+        <EditText
             android:id="@+id/editTextQuantidade"
             android:hint="Quantidade"
             android:inputType="number"
@@ -41,7 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Button"
+            android:textColor="@color/white"
             android:id="@+id/buttonSalvar"
             android:text="Salvar Produto"
             android:layout_marginTop="24dp"

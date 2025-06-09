@@ -14,11 +14,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CadastroProdutoActivity extends AppCompatActivity {
 
-    private EditText editTextNome, editTextQuantidade, editTextCategoria;
+    private EditText editTextNome, editTextQuantidade, editTextCategoria, editTextValor;
     private Button buttonSalvar;
-
     private DatabaseReference databaseRef;
 
     @Override
@@ -26,16 +28,14 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produto);
 
-        // Inicializa o Firebase
         databaseRef = FirebaseDatabase.getInstance().getReference("produtos");
 
-        // Liga os componentes da tela
         editTextNome = findViewById(R.id.editTextNome);
         editTextQuantidade = findViewById(R.id.editTextQuantidade);
         editTextCategoria = findViewById(R.id.editTextCategoria);
+        editTextValor = findViewById(R.id.editTextValor);
         buttonSalvar = findViewById(R.id.buttonSalvar);
 
-        // Ação do botão "Salvar"
         buttonSalvar.setOnClickListener(v -> salvarProduto());
     }
 
@@ -43,13 +43,18 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         String nome = editTextNome.getText().toString().trim();
         String quantidadeStr = editTextQuantidade.getText().toString().trim();
         String categoria = editTextCategoria.getText().toString().trim();
+        String valorStr = editTextValor.getText().toString().trim();
 
-        if (nome.isEmpty() || quantidadeStr.isEmpty() || categoria.isEmpty()) {
+        if (nome.isEmpty() || quantidadeStr.isEmpty() || categoria.isEmpty() || valorStr.isEmpty()) {
             Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         int quantidade = Integer.parseInt(quantidadeStr);
+        double valor = Double.parseDouble(valorStr);
+
+        // Gera a data atual no formato dd/MM/yyyy
+        String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
         // Verifica se o produto já existe
         databaseRef.orderByChild("nome").equalTo(nome)
@@ -60,7 +65,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                             Toast.makeText(CadastroProdutoActivity.this, "Produto já cadastrado!", Toast.LENGTH_SHORT).show();
                         } else {
                             String id = databaseRef.push().getKey();
-                            Produto produto = new Produto(nome, quantidade, categoria);
+                            Produto produto = new Produto(nome, quantidade, categoria, valor, dataAtual);
                             databaseRef.child(id).setValue(produto)
                                     .addOnSuccessListener(aVoid ->
                                             Toast.makeText(CadastroProdutoActivity.this, "Produto cadastrado com sucesso!", Toast.LENGTH_SHORT).show()

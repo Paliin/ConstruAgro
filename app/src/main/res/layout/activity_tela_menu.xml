@@ -1,43 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/main"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/DarkBlue"
-        app:title=""
-        app:titleTextColor="@android:color/white"/>
-
-    <!-- Conteúdo principal -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp">
+        android:padding="16dp">
 
-        <!-- SearchView -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/Text_Pesquisar_Itens"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:queryHint="Pesquisar itens..."
-            android:background="@android:color/white" />
+            android:queryHint="Pesquisar itens..." />
 
-        <!-- RecyclerView para listar os itens -->
+        <EditText
+            android:id="@+id/filtro_categoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:hint="Filtrar por categoria"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/filtro_valor_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:hint="Filtrar por valor máximo"
+            android:inputType="numberDecimal" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/data_inicio"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Data início"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="date"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/data_fim"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Data fim"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="date"
+                android:padding="12dp"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_itens"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/white" />
+            android:layout_height="match_parent"
+            android:contentDescription="Lista de produtos disponíveis"
+            />
     </LinearLayout>
 
     <!-- Floating Action Button -->
@@ -53,6 +90,7 @@
         android:src="@drawable/ic_cruz_branca_botao_menu"
         android:contentDescription="Adicionar Item" />
 
+    <!-- Menu popup -->
     <LinearLayout
         android:id="@+id/layout_menu_popup"
         android:layout_width="240dp"
@@ -60,7 +98,10 @@
         android:orientation="vertical"
         android:background="@drawable/bg_menu_popup"
         android:padding="10dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="20dp">
 
         <TextView
             android:id="@+id/opcao_cadastrar"
@@ -99,8 +140,5 @@
             android:paddingEnd="16dp" />
 
     </LinearLayout>
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
