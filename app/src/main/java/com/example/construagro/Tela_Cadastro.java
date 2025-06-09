@@ -119,7 +119,6 @@ public class Tela_Cadastro extends AppCompatActivity {
         usuarios.put("email", email);
 
         String usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid(); // pega o ID do usuário atual
-
         DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
         documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
