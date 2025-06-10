@@ -38,7 +38,8 @@ public class Tela_Menu extends AppCompatActivity {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private ProdutoAdapter adapter;
-    private List<Produto> listaProdutos;
+    private List<Produto> listaProdutos;          // Lista exibida no adapter
+    private List<Produto> listaProdutosOriginal;  // Lista original com todos os produtos carregados
     private DatabaseReference produtosRef;
 
     private LinearLayout layoutMenuRapido;
@@ -77,9 +78,11 @@ public class Tela_Menu extends AppCompatActivity {
         opcaoSaida = findViewById(R.id.opcao_saida);
         opcaoRelatorio = findViewById(R.id.opcao_relatorio);
 
-        // Configura lista e adapter
+        // Inicializa as listas
+        listaProdutosOriginal = new ArrayList<>();
         listaProdutos = new ArrayList<>();
         adapter = new ProdutoAdapter(listaProdutos);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -96,14 +99,21 @@ public class Tela_Menu extends AppCompatActivity {
         dataInicio.setOnClickListener(v -> abrirDatePicker(dataInicio));
         dataFim.setOnClickListener(v -> abrirDatePicker(dataFim));
 
-        // Listeners para filtros
+        // Configuração do SearchView
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Pesquisar itens...");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override public boolean onQueryTextChange(String newText) {
-                aplicarFiltros();
+                if (newText == null || newText.trim().isEmpty()) {
+                    // Texto vazio: mostra lista completa original sem filtros
+                    listaProdutos.clear();
+                    listaProdutos.addAll(listaProdutosOriginal);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    aplicarFiltros();
+                }
                 return true;
             }
         });
@@ -168,12 +178,15 @@ public class Tela_Menu extends AppCompatActivity {
         produtosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                listaProdutos.clear();
+                listaProdutosOriginal.clear();
                 for (DataSnapshot dado : snapshot.getChildren()) {
                     Produto produto = dado.getValue(Produto.class);
-                    listaProdutos.add(produto);
+                    listaProdutosOriginal.add(produto);
                 }
-                aplicarFiltros(); // Atualiza filtragem ao carregar produtos
+                // Atualiza lista exibida e adapter
+                listaProdutos.clear();
+                listaProdutos.addAll(listaProdutosOriginal);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -195,7 +208,7 @@ public class Tela_Menu extends AppCompatActivity {
         Long dataFimMillis = dataToMillis(dataFimStr);
 
         List<Produto> filtrada = new ArrayList<>();
-        for (Produto p : listaProdutos) {
+        for (Produto p : listaProdutosOriginal) {
             if (filtrarPorNome(p, textoBusca) &&
                     filtrarPorCategoria(p, categoriaFiltro) &&
                     filtrarPorValor(p, valorMax) &&
@@ -203,7 +216,9 @@ public class Tela_Menu extends AppCompatActivity {
                 filtrada.add(p);
             }
         }
-        adapter.atualizarLista(filtrada);
+        listaProdutos.clear();
+        listaProdutos.addAll(filtrada);
+        adapter.notifyDataSetChanged();
     }
 
     private boolean filtrarPorNome(Produto p, String textoBusca) {
