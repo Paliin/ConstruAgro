@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissões necessárias -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,33 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Construagro"
         tools:targetApi="31">
-        <activity
-            android:name=".CadastroProdutoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Tela_Menu"
-            android:exported="false" />
-        <activity
-            android:name=".Tela_Usuario"
-            android:exported="false" />
-        <activity
-            android:name=".Tela_Cadastro"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+
+        <activity android:name=".CadastroProdutoActivity" android:exported="false" />
+        <activity android:name=".Tela_Menu" android:exported="false" />
+        <activity android:name=".Tela_Usuario" android:exported="false" />
+        <activity android:name=".Tela_Cadastro" android:exported="false" />
+        <activity android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".Tela_Login"
+        <activity android:name=".Tela_Login"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
