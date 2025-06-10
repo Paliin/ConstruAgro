@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -38,14 +34,14 @@ public class Tela_Menu extends AppCompatActivity {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private ProdutoAdapter adapter;
-    private List<Produto> listaProdutos;          // Lista exibida no adapter
-    private List<Produto> listaProdutosOriginal;  // Lista original com todos os produtos carregados
+    private List<Produto> listaProdutos;
+    private List<Produto> listaProdutosOriginal;
     private DatabaseReference produtosRef;
 
-    private LinearLayout layoutMenuRapido;
-    private TextView opcaoCadastrar, opcaoSaida, opcaoRelatorio;
-
     private EditText filtroCategoria, filtroValorMax, dataInicio, dataFim;
+
+    // Declare como LinearLayout pois no XML são LinearLayouts, não Buttons
+    private LinearLayout botaoCadastrar, botaoSaida, botaoRelatorio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +59,7 @@ public class Tela_Menu extends AppCompatActivity {
             return insets;
         });
 
-        // Referências do layout
+        // Referências de interface
         searchView = findViewById(R.id.Text_Pesquisar_Itens);
         recyclerView = findViewById(R.id.recycler_view_itens);
         filtroCategoria = findViewById(R.id.filtro_categoria);
@@ -71,14 +67,11 @@ public class Tela_Menu extends AppCompatActivity {
         dataInicio = findViewById(R.id.data_inicio);
         dataFim = findViewById(R.id.data_fim);
 
-        ImageButton fab = findViewById(R.id.Button_Menu_Rapido);
+        // Botões fixos na barra inferior - agora LinearLayouts
+        botaoCadastrar = findViewById(R.id.botao_cadastrar);
+        botaoSaida = findViewById(R.id.botao_saida);
+        botaoRelatorio = findViewById(R.id.botao_relatorio);
 
-        layoutMenuRapido = findViewById(R.id.layout_menu_popup);
-        opcaoCadastrar = findViewById(R.id.opcao_cadastrar);
-        opcaoSaida = findViewById(R.id.opcao_saida);
-        opcaoRelatorio = findViewById(R.id.opcao_relatorio);
-
-        // Inicializa as listas
         listaProdutosOriginal = new ArrayList<>();
         listaProdutos = new ArrayList<>();
         adapter = new ProdutoAdapter(listaProdutos);
@@ -86,11 +79,10 @@ public class Tela_Menu extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        // Firebase
         produtosRef = FirebaseDatabase.getInstance().getReference("produtos");
         carregarProdutosFirebase();
 
-        // DatePickers para filtro de datas
+        // DatePickers
         dataInicio.setFocusable(false);
         dataInicio.setClickable(true);
         dataFim.setFocusable(false);
@@ -99,15 +91,12 @@ public class Tela_Menu extends AppCompatActivity {
         dataInicio.setOnClickListener(v -> abrirDatePicker(dataInicio));
         dataFim.setOnClickListener(v -> abrirDatePicker(dataFim));
 
-        // Configuração do SearchView
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Pesquisar itens...");
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override public boolean onQueryTextChange(String newText) {
                 if (newText == null || newText.trim().isEmpty()) {
-                    // Texto vazio: mostra lista completa original sem filtros
                     listaProdutos.clear();
                     listaProdutos.addAll(listaProdutosOriginal);
                     adapter.notifyDataSetChanged();
@@ -129,49 +118,15 @@ public class Tela_Menu extends AppCompatActivity {
         filtroCategoria.addTextChangedListener(filtroTextWatcher);
         filtroValorMax.addTextChangedListener(filtroTextWatcher);
 
-        // FAB - botão do menu rápido
-        fab.setOnClickListener(v -> {
-            if (layoutMenuRapido.getVisibility() == View.VISIBLE) {
-                layoutMenuRapido.setVisibility(View.GONE);
-            } else {
-                layoutMenuRapido.setVisibility(View.VISIBLE);
-                layoutMenuRapido.post(() -> {
-                    int[] fabLocation = new int[2];
-                    fab.getLocationOnScreen(fabLocation);
-                    int fabX = fabLocation[0];
-                    int fabY = fabLocation[1];
+        // Ações dos botões inferiores
+        botaoCadastrar.setOnClickListener(v ->
+                startActivity(new Intent(Tela_Menu.this, CadastroProdutoActivity.class)));
 
-                    int popupWidth = layoutMenuRapido.getWidth();
-                    int popupHeight = layoutMenuRapido.getHeight();
-                    int margin = 20;
+        botaoSaida.setOnClickListener(v ->
+                Toast.makeText(this, "Saída de Itens - em desenvolvimento", Toast.LENGTH_SHORT).show());
 
-                    float posX = fabX + fab.getWidth() - popupWidth;
-                    if (posX < margin) posX = margin;
-
-                    float posY = fabY - popupHeight - margin;
-                    if (posY < margin) posY = margin;
-
-                    layoutMenuRapido.setX(posX);
-                    layoutMenuRapido.setY(posY);
-                });
-            }
-        });
-
-        // Ações dos botões do menu rápido
-        opcaoCadastrar.setOnClickListener(v -> {
-            layoutMenuRapido.setVisibility(View.GONE);
-            startActivity(new Intent(Tela_Menu.this, CadastroProdutoActivity.class));
-        });
-
-        opcaoSaida.setOnClickListener(v -> {
-            layoutMenuRapido.setVisibility(View.GONE);
-            Toast.makeText(this, "Saída de Itens - em desenvolvimento", Toast.LENGTH_SHORT).show();
-        });
-
-        opcaoRelatorio.setOnClickListener(v -> {
-            layoutMenuRapido.setVisibility(View.GONE);
-            Toast.makeText(this, "Relatórios - em desenvolvimento", Toast.LENGTH_SHORT).show();
-        });
+        botaoRelatorio.setOnClickListener(v ->
+                Toast.makeText(this, "Relatórios - em desenvolvimento", Toast.LENGTH_SHORT).show());
     }
 
     private void carregarProdutosFirebase() {
@@ -183,7 +138,6 @@ public class Tela_Menu extends AppCompatActivity {
                     Produto produto = dado.getValue(Produto.class);
                     listaProdutosOriginal.add(produto);
                 }
-                // Atualiza lista exibida e adapter
                 listaProdutos.clear();
                 listaProdutos.addAll(listaProdutosOriginal);
                 adapter.notifyDataSetChanged();

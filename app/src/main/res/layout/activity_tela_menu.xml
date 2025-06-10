@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="90dp"> <!-- Ajuste para evitar sobreposição com o menu -->
 
         <!-- Toolbar azul -->
         <androidx.appcompat.widget.Toolbar
@@ -90,57 +92,93 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:contentDescription="Lista de produtos cadastrados"
             android:padding="8dp" />
     </LinearLayout>
 
-    <!-- Botão flutuante -->
-    <ImageButton
-        android:id="@+id/Button_Menu_Rapido"
-        android:layout_width="86dp"
-        android:layout_height="86dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/DarkBlue"
-        android:background="@drawable/fab_background"
-        android:src="@drawable/ic_cruz_branca_botao_menu"
-        android:contentDescription="Menu rápido" />
-
-    <!-- Menu flutuante -->
+    <!-- menu inferior com botões -->
     <LinearLayout
-        android:id="@+id/layout_menu_popup"
-        android:layout_width="250dp"
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:elevation="10dp"
-        android:background="@drawable/menu_background"
-        android:padding="10dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="80dp"
-        android:layout_marginEnd="16dp">
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:background="@color/DarkBlue"
+        android:padding="8dp"
+        android:gravity="center">
 
-        <TextView
-            android:id="@+id/opcao_cadastrar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/botao_cadastrar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Cadastrar Produto"
-            android:textSize="20dp"
-            android:padding="8dp" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/opcao_saida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Saída de Itens"
-            android:textSize="20dp"
-            android:padding="8dp" />
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/button_cadastrar_icon" />
 
-        <TextView
-            android:id="@+id/opcao_relatorio"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadastrar"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/botao_saida"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Relatórios"
-            android:textSize="20dp"
-            android:padding="8dp" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/button_saida_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saída"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/botao_relatorio"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/button_relatorios_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Relatórios"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
     </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
