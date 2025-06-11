@@ -1,11 +1,13 @@
 package com.example.construagro;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -69,6 +71,16 @@ public class Tela_Cadastro extends AppCompatActivity {
                 }
             }
         });
+
+        ImageButton btnVoltar = findViewById(R.id.btn_voltar);
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Volta para a tela anterior
+                finish();
+            }
+        });
+
     }
 
     // CADASTRO NO FIREBASE
@@ -85,6 +97,14 @@ public class Tela_Cadastro extends AppCompatActivity {
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
                             snackbar.show();
+
+                            // Ir para Tela_Menu após 1 segundo para dar tempo de mostrar o Snackbar
+                            V.postDelayed(() -> {
+                                Intent intent = new Intent(Tela_Cadastro.this, Tela_Menu.class);
+                                startActivity(intent);
+                                finish(); // Finaliza a tela de cadastro
+                            }, 1000); // 1000ms = 1 segundo
+
                         } else {
                             String erro;
                             try {

@@ -74,7 +74,7 @@ public class Tela_Menu extends AppCompatActivity {
         botaoUsuario = findViewById(R.id.botao_usuario);
 
         botaoUsuario.setOnClickListener(v ->
-                startActivity(new Intent(Tela_Menu.this, Tela_Alterar_Dados_Usuario.class)));
+                startActivity(new Intent(Tela_Menu.this, Tela_Usuario.class)));
 
         listaProdutosOriginal = new ArrayList<>();
         listaProdutos = new ArrayList<>();

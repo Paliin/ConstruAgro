@@ -3,6 +3,7 @@ package com.example.construagro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 
 public class Tela_Usuario extends AppCompatActivity {
 
@@ -44,14 +49,24 @@ public class Tela_Usuario extends AppCompatActivity {
 
         if (user != null) {
             String email = user.getEmail();
-            String nome = user.getDisplayName();
+            String userId = user.getUid();
 
             emailUsuarioTextView.setText("Email: " + email);
-            if (nome != null && !nome.isEmpty()) {
-                nomeUsuarioTextView.setText("Nome: " + nome);
-            } else {
-                nomeUsuarioTextView.setText("Nome: não disponível");
-            }
+
+            // Buscar o nome do Firestore
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("Usuarios").document(userId);
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String nome = documentSnapshot.getString("nome");
+                    nomeUsuarioTextView.setText("Nome: " + nome);
+                } else {
+                    nomeUsuarioTextView.setText("Nome: não encontrado");
+                }
+            }).addOnFailureListener(e -> {
+                nomeUsuarioTextView.setText("Erro ao carregar nome");
+            });
+
         } else {
             Toast.makeText(this, "Nenhum usuário conectado", Toast.LENGTH_SHORT).show();
         }
@@ -66,8 +81,13 @@ public class Tela_Usuario extends AppCompatActivity {
 
         // Alterar dados (você pode abrir uma tela futura)
         btnAlterarDados.setOnClickListener(v -> {
-            Toast.makeText(this, "Função 'Alterar dados' em desenvolvimento", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(this, TelaAlterarDados.class));
+             startActivity(new Intent(this, Tela_Alterar_Dados_Usuario.class));
         });
+
+        ImageButton btnVoltar = findViewById(R.id.btn_voltar);
+        btnVoltar.setOnClickListener(v -> {
+            finish(); // Fecha a tela atual e volta para a anterior
+        });
+
     }
 }

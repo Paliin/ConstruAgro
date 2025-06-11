@@ -8,6 +8,21 @@
     android:background="@drawable/estilo_background_login"
     tools:context=".Tela_Cadastro">
 
+    <ImageButton
+        android:id="@+id/btn_voltar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back_button"
+        android:background="@android:color/transparent"
+        android:contentDescription="Botão Voltar"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        />
+
     <TextView
         android:id="@+id/Texto_dados_usuario"
         android:layout_width="wrap_content"

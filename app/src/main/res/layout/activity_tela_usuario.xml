@@ -9,42 +9,77 @@
     android:background="@drawable/estilo_background_login"
     tools:context=".Tela_Usuario">
 
-    <TextView
-        android:id="@+id/nome_usuario"
+    <ImageButton
+        android:id="@+id/btn_voltar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back_button"
+        android:background="@android:color/transparent"
+        android:contentDescription="Botão Voltar"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/logo_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toTopOf="@id/container_usuario"
+        android:src="@drawable/ic_person"
+        app:tint="@color/white"
+        />
+
+    <LinearLayout
+        android:id="@+id/container_usuario"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome: ---"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:fontFamily="monospace"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/estilo_container_branco"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="180dp"/>
+        android:layout_marginTop="200dp">
 
-    <TextView
-        android:id="@+id/email_usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email: ---"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:fontFamily="monospace"
-        app:layout_constraintTop_toBottomOf="@id/nome_usuario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        <TextView
+            android:id="@+id/nome_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usuário: ---"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:id="@+id/email_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: ---"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_alterar_dados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alterar Dados"
-        android:textSize="18sp"
+        android:text=" Alterar Dados"
+        style="@style/Confirm_Button"
         android:textColor="@color/white"
-        android:backgroundTint="@color/DarkBlue"
-        app:layout_constraintTop_toBottomOf="@id/email_usuario"
+        android:textSize="18sp"
+        android:drawableStart="@drawable/button_usuario_icon"
+        app:layout_constraintTop_toBottomOf="@id/container_usuario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"/>
@@ -53,13 +88,14 @@
         android:id="@+id/btn_desconectar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Desconectar"
-        android:textSize="18sp"
+        android:text=" Desconectar"
+        style="@style/Quit_button"
         android:textColor="@color/white"
-        android:backgroundTint="@color/DarkBlue"
+        android:textSize="18sp"
         android:drawableStart="@drawable/ic_quit"
         app:layout_constraintTop_toBottomOf="@id/btn_alterar_dados"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
