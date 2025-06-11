@@ -165,7 +165,8 @@ public class Tela_Menu extends AppCompatActivity {
 
         opcaoSaida.setOnClickListener(v -> {
             layoutMenuRapido.setVisibility(View.GONE);
-            Toast.makeText(this, "Saída de Itens - em desenvolvimento", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Tela_Menu.this, SaidaProdutoActivity.class);
+            startActivity(intent);
         });
 
         opcaoRelatorio.setOnClickListener(v -> {

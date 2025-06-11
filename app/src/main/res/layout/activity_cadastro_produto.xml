@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -20,17 +21,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/editTextNome"
-            android:hint="Nome do Produto"
-
-            android:textColorHint="#888888"
-            android:inputType="textCapWords"
+        <!-- Substitua o EditText por AutoCompleteTextView -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            app:hintEnabled="true"
+            android:hint="Nome do Produto">
 
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:completionThreshold="1"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Adicione este TextView para mostrar a quantidade existente -->
+        <TextView
+            android:id="@+id/textViewQuantidadeExistente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/DarkBlue"
+            android:visibility="gone"/>
+
+        <!-- Mantenha os outros campos -->
         <EditText
             android:id="@+id/editTextValor"
             android:hint="Valor"
@@ -64,6 +81,7 @@
             android:padding="12dp"
             android:background="@drawable/edittext_background" />
 
+        <!-- Mantenha os botões -->
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Button"
             android:textColor="@color/white"
@@ -81,7 +99,6 @@
             android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
     </LinearLayout>
 </ScrollView>

@@ -38,12 +38,16 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.common)
+    implementation(libs.firebase.database)
 
     implementation(libs.appcompat)
-    implementation(libs.material)
+    implementation(libs.material) // Já está declarado via libs
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.database)
+
+    // Adicione estas dependências para melhor suporte do Material Design
+    implementation("com.google.android.material:material:1.11.0") // Versão mais recente
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2") // Para ViewModel
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

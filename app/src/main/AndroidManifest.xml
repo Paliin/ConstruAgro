@@ -32,6 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SaidaProdutoActivity"
+            android:label="Saída de Produtos"
+            android:parentActivityName=".Tela_Menu"/>
 
     </application>
 
