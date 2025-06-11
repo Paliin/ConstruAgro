@@ -41,7 +41,7 @@ public class Tela_Menu extends AppCompatActivity {
     private EditText filtroCategoria, filtroValorMax, dataInicio, dataFim;
 
     // Declare como LinearLayout pois no XML são LinearLayouts, não Buttons
-    private LinearLayout botaoCadastrar, botaoSaida, botaoRelatorio;
+    private LinearLayout botaoCadastrar, botaoSaida, botaoRelatorio, botaoUsuario;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,10 @@ public class Tela_Menu extends AppCompatActivity {
         botaoCadastrar = findViewById(R.id.botao_cadastrar);
         botaoSaida = findViewById(R.id.botao_saida);
         botaoRelatorio = findViewById(R.id.botao_relatorio);
+        botaoUsuario = findViewById(R.id.botao_usuario);
+
+        botaoUsuario.setOnClickListener(v ->
+                startActivity(new Intent(Tela_Menu.this, Tela_Alterar_Dados_Usuario.class)));
 
         listaProdutosOriginal = new ArrayList<>();
         listaProdutos = new ArrayList<>();
