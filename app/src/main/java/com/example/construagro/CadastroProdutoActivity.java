@@ -1,8 +1,10 @@
 package com.example.construagro;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,8 +37,18 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         editTextCategoria = findViewById(R.id.editTextCategoria);
         editTextValor = findViewById(R.id.editTextValor);
         buttonSalvar = findViewById(R.id.buttonSalvar);
+        ImageButton btnVoltar = findViewById(R.id.btn_voltar);
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Encerra a Activity atual e volta para a anterior
+            }
+        });
+
 
         buttonSalvar.setOnClickListener(v -> salvarProduto());
+
     }
 
     private void salvarProduto() {

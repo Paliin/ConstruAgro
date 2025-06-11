@@ -1,87 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/estilo_background_login"
+    android:fitsSystemWindows="true">  <!-- Aqui evita sobreposição -->
 
-    <LinearLayout
-        android:padding="24dp"
+    <ImageButton
+        android:id="@+id/btn_voltar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back_button"
+        android:background="@android:color/transparent"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ScrollView
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/btn_voltar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:text="Cadastro de Produto"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="@color/DarkBlue"
-            android:layout_gravity="center"
-            android:layout_marginBottom="32dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/editTextNome"
-            android:hint="Nome do Produto"
-
-            android:textColorHint="#888888"
-            android:inputType="textCapWords"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
 
-        <EditText
-            android:id="@+id/editTextValor"
-            android:hint="Valor"
-            android:textColorHint="#888888"
-            android:inputType="numberDecimal"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            <ImageView
+                android:id="@+id/icon_produto"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_novo_produto"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
+                android:contentDescription="Ícone de Produto"
+                app:tint="@android:color/white" />
 
-        <EditText
-            android:id="@+id/editTextQuantidade"
-            android:hint="Quantidade"
-            android:textColorHint="#888888"
-            android:inputType="number"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            <TextView
+                android:text="CADASTRO DE PRODUTO"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true" />
 
-        <EditText
-            android:id="@+id/editTextCategoria"
-            android:hint="Categoria"
-            android:textColorHint="#888888"
-            android:inputType="textCapWords"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/estilo_container_branco"
+                android:padding="20dp"
+                android:layout_marginBottom="15dp"
+                android:elevation="4dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            style="@style/Button"
-            android:textColor="@color/white"
-            android:id="@+id/buttonSalvar"
-            android:text="Salvar Produto"
-            android:layout_marginTop="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/editTextNome"
+                    android:hint="Nome do Produto"
+                    android:textColorHint="#888888"
+                    android:inputType="textCapWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/estilo_edit_text"
+                    android:layout_marginBottom="20dp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            style="@style/Button"
-            android:textColor="@color/white"
-            android:id="@+id/buttonCancelar"
-            android:text="Cancelar"
-            android:layout_marginTop="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginBottom="20dp">
 
+                    <EditText
+                        android:id="@+id/editTextValor"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Valor"
+                        android:textColorHint="#888888"
+                        android:inputType="numberDecimal"
+                        android:padding="12dp"
+                        android:background="@drawable/estilo_edit_text"
+                        android:layout_marginEnd="8dp" />
 
-    </LinearLayout>
-</ScrollView>
+                    <EditText
+                        android:id="@+id/editTextQuantidade"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Quantidade"
+                        android:textColorHint="#888888"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:background="@drawable/estilo_edit_text"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editTextCategoria"
+                    android:hint="Categoria"
+                    android:textColorHint="#888888"
+                    android:inputType="textCapWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/estilo_edit_text"
+                    android:layout_marginBottom="8dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonSalvar"
+                    style="@style/Button"
+                    android:text="CADASTRAR PRODUTO"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
