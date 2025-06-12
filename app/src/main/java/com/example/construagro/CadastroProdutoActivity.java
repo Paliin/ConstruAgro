@@ -87,7 +87,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             }
         });
 
-        // Botão salvar chama o método que cadastra ou atualiza
+        // Botão salvar chama o métod que cadastra ou atualiza
         buttonSalvar.setOnClickListener(v -> salvarProduto());
 
         // Botão voltar fecha a activity atual
