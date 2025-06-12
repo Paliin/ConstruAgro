@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/estilo_background_login"
-    android:fitsSystemWindows="true">  <!-- Aqui evita sobreposição -->
+    android:fitsSystemWindows="true">
 
     <ImageButton
         android:id="@+id/btn_voltar"
@@ -65,23 +65,39 @@
                 android:layout_marginBottom="15dp"
                 android:elevation="4dp">
 
-                <EditText
-                    android:id="@+id/editTextNome"
-                    android:hint="Nome do Produto"
-                    android:textColorHint="#888888"
-                    android:inputType="textCapWords"
+                <!-- CAMPO AUTO COMPLETE NOME -->
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="@drawable/estilo_edit_text"
-                    android:layout_marginBottom="20dp" />
+                    android:hint="Nome do Produto"
+                    app:hintEnabled="true"
+                    android:layout_marginBottom="8dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextViewNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:completionThreshold="1"
+                        android:padding="12dp"
+                        android:background="@drawable/estilo_edit_text"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- QUANTIDADE EXISTENTE (opcional) -->
+                <TextView
+                    android:id="@+id/textViewQuantidadeExistente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:visibility="gone"
+                    android:layout_marginBottom="16dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="12dp">
 
                     <EditText
                         android:id="@+id/editTextValor"
@@ -110,23 +126,34 @@
 
                 <EditText
                     android:id="@+id/editTextCategoria"
-                    android:hint="Categoria"
-                    android:textColorHint="#888888"
-                    android:inputType="textCapWords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
+                    android:layout_marginBottom="18dp"
                     android:background="@drawable/estilo_edit_text"
-                    android:layout_marginBottom="8dp" />
+                    android:hint="Categoria"
+                    android:inputType="textCapWords"
+                    android:padding="12dp"
+                    android:textColorHint="#888888" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonSalvar"
                     style="@style/Button"
                     android:text="CADASTRAR PRODUTO"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <!-- BOTÃO CANCELAR (opcional) -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonCancelar"
+                    style="@style/Quit_button"
+                    android:text="CANCELAR"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

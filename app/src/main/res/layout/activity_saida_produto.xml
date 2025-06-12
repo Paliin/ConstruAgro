@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Saída de Produtos"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/DarkBlue"
+            android:layout_gravity="center"
+            android:layout_marginBottom="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="true"
+            android:hint="Nome do Produto">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewProduto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:completionThreshold="1"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textViewQuantidadeAtual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/DarkBlue"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/editTextQuantidadeSaida"
+            android:hint="Quantidade para retirar"
+            android:textColorHint="#888888"
+            android:inputType="number"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background" />
+
+        <TextView
+            android:id="@+id/textViewQuantidadeRestante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/DarkBlue"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/buttonAdicionarSaida"
+            android:text="Adicionar à lista de saída"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Button"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSaidas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/buttonConfirmarTodasSaidas"
+            android:text="Confirmar Todas as Saídas"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Button"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>
