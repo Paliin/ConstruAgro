@@ -135,23 +135,24 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             return;
         }
 
-        int quantidadeAdicional = Integer.parseInt(quantidadeStr);
+        int novaQuantidade = Integer.parseInt(quantidadeStr);
         double valor = Double.parseDouble(valorStr);
         String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
 
         if (produtoSelecionado != null) {
-            // Soma a nova quantidade à existente
-            int novaQuantidadeTotal = produtoSelecionado.getQuantidade() + quantidadeAdicional;
+            // Atualiza produto existente
+            int diferenca = novaQuantidade - produtoSelecionado.getQuantidade();
+            String tipoMovimentacao = diferenca > 0 ? "Entrada" : "Saída";
 
             Produto.Movimentacao mov = new Produto.Movimentacao(
-                    quantidadeAdicional,
-                    "Entrada",
+                    Math.abs(diferenca),
+                    tipoMovimentacao,
                     usuarioAtual,
                     dataAtual,
-                    "Adição de estoque"
+                    "Atualização via app"
             );
 
-            produtoSelecionado.setQuantidade(novaQuantidadeTotal);
+            produtoSelecionado.setQuantidade(novaQuantidade);
             produtoSelecionado.setCategoria(categoria);
             produtoSelecionado.setValor(valor);
             produtoSelecionado.getHistorico().add(mov);
@@ -159,7 +160,8 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             databaseRef.child(produtoSelecionado.getId()).setValue(produtoSelecionado)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this,
-                                String.format("Quantidade somada com sucesso! Novo total: %d", novaQuantidadeTotal),
+                                String.format("Estoque atualizado! %s de %d unidades por %s",
+                                        tipoMovimentacao, Math.abs(diferenca), usuarioAtual),
                                 Toast.LENGTH_LONG).show();
                         limparCampos();
                     })
@@ -170,7 +172,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             String id = databaseRef.push().getKey();
             Produto novoProduto = new Produto(
                     nome,
-                    quantidadeAdicional,
+                    novaQuantidade,
                     categoria,
                     valor,
                     dataAtual,
@@ -189,7 +191,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                             Toast.makeText(this, "Erro ao cadastrar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
-
 
     private void limparCampos() {
         autoCompleteTextViewNome.setText("");

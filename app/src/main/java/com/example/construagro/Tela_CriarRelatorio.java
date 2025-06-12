@@ -29,14 +29,15 @@ public class Tela_CriarRelatorio extends AppCompatActivity {
     private Button buttonGerarRelatorio, buttonExportarPDF;
     private RecyclerView recyclerViewResultadoRelatorio;
     private RelatorioResultadoAdapter adapter;
-    private ArrayList<Object> resultados;
+
+    private ArrayList<Produto> resultadosProdutos = new ArrayList<>();
+    private ArrayList<Saida> resultadosSaidas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_criar_relatorio);
 
-        // Bind views
         spinnerTipoRelatorio = findViewById(R.id.spinnerTipoRelatorio);
         spinnerNomeFiltro = findViewById(R.id.spinnerNomeFiltro);
         editTextDataInicio = findViewById(R.id.editTextDataInicio);
@@ -46,26 +47,23 @@ public class Tela_CriarRelatorio extends AppCompatActivity {
         buttonExportarPDF = findViewById(R.id.buttonExportarPDF);
         recyclerViewResultadoRelatorio = findViewById(R.id.recyclerViewResultadoRelatorio);
 
-        resultados = new ArrayList<>();
-        adapter = new RelatorioResultadoAdapter(new ArrayList<>(), this);
+        adapter = new RelatorioResultadoAdapter(this);
         recyclerViewResultadoRelatorio.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewResultadoRelatorio.setAdapter(adapter);
 
-        // Tipo de relatório
+        // Configura os spinners
         ArrayAdapter<String> tipoAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 new String[]{"Itens Cadastrados", "Saídas de Produtos"});
         tipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoRelatorio.setAdapter(tipoAdapter);
 
-        // Spinner nome - exemplo (substitua com nomes reais do banco)
         ArrayAdapter<String> nomeAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 new String[]{"", "Areia", "Cimento", "Tijolo"});
         nomeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerNomeFiltro.setAdapter(nomeAdapter);
 
-        // Calendários
         setupDatePicker(editTextDataInicio);
         setupDatePicker(editTextDataFim);
 
@@ -95,36 +93,65 @@ public class Tela_CriarRelatorio extends AppCompatActivity {
         String dataFim = editTextDataFim.getText().toString();
         String cadastradoPor = editTextCadastradoPorFiltro.getText().toString().trim();
 
-        resultados.clear();
-
-        String referencia = tipo.equals("Itens Cadastrados") ? "produtos" : "saidas";
-
-        FirebaseDatabase.getInstance().getReference(referencia)
-                .orderByChild("nome")
-                .startAt(nomeSelecionado)
-                .endAt(nomeSelecionado + "\uf8ff")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            Object item = ds.getValue(Object.class); // Substituir por Produto ou Saida se quiser
-                            resultados.add(item);
+        if (tipo.equals("Itens Cadastrados")) {
+            resultadosProdutos.clear();
+            FirebaseDatabase.getInstance().getReference("produtos")
+                    .orderByChild("nome")
+                    .startAt(nomeSelecionado)
+                    .endAt(nomeSelecionado + "\uf8ff")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                Produto produto = ds.getValue(Produto.class);
+                                if (produto != null) {
+                                    resultadosProdutos.add(produto);
+                                }
+                            }
+                            Toast.makeText(Tela_CriarRelatorio.this,
+                                    "Relatório gerado com " + resultadosProdutos.size() + " produtos.",
+                                    Toast.LENGTH_SHORT).show();
+                            adapter.atualizarListaProdutos(resultadosProdutos);
                         }
-                        Toast.makeText(Tela_CriarRelatorio.this,
-                                "Relatório gerado com " + resultados.size() + " itens.",
-                                Toast.LENGTH_SHORT).show();
-                        adapter.atualizarLista(resultados);
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(Tela_CriarRelatorio.this, "Erro ao gerar relatório", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Tela_CriarRelatorio.this,
+                                    "Erro ao gerar relatório", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        } else if (tipo.equals("Saídas de Produtos")) {
+            resultadosSaidas.clear();
+            FirebaseDatabase.getInstance().getReference("saidas")
+                    .orderByChild("nome")
+                    .startAt(nomeSelecionado)
+                    .endAt(nomeSelecionado + "\uf8ff")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                Saida saida = ds.getValue(Saida.class);
+                                if (saida != null) {
+                                    resultadosSaidas.add(saida);
+                                }
+                            }
+                            Toast.makeText(Tela_CriarRelatorio.this,
+                                    "Relatório gerado com " + resultadosSaidas.size() + " saídas.",
+                                    Toast.LENGTH_SHORT).show();
+                            adapter.atualizarListaSaidas(resultadosSaidas);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Tela_CriarRelatorio.this,
+                                    "Erro ao gerar relatório", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     private void exportarPDF() {
         Toast.makeText(this, "Exportação para PDF em desenvolvimento", Toast.LENGTH_SHORT).show();
-        // Aqui entrará a lógica futura de exportação
     }
 }

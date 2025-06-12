@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,13 +57,6 @@ public class SaidaProdutoActivity extends AppCompatActivity {
         usuarioAtual = user != null ? user.getDisplayName() : "Administrador";
 
         databaseRef = FirebaseDatabase.getInstance().getReference("produtos");
-
-        // Toolbar com botão voltar
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ImageButton botaoVoltar = findViewById(R.id.botao_voltar);
-        botaoVoltar.setOnClickListener(v -> finish());
-
 
         // Inicializa componentes
         autoCompleteTextViewProduto = findViewById(R.id.autoCompleteTextViewProduto);
