@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/DarkBlue"
     android:fitsSystemWindows="true">
 
-    <!-- Toolbar azul no topo -->
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -116,14 +117,17 @@
                 android:layout_marginTop="24dp"
                 android:visibility="gone"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonConfirmarTodasSaidas"
                 android:text="Confirmar Todas as Saídas"
+                android:textColor="@color/white"
                 android:layout_marginTop="16dp"
+                android:textSize="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Button"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                style="@style/Button"/>
+
 
         </LinearLayout>
     </ScrollView>

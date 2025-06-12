@@ -17,25 +17,37 @@
             android:inputType="text"
             android:padding="8dp" />
 
-        <EditText
-            android:id="@+id/editDataInicio"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Data Início"
-            android:focusable="false"
-            android:inputType="none"
-            android:padding="8dp"
-            android:layout_marginTop="8dp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:padding="0dp">
 
-        <EditText
-            android:id="@+id/editDataFim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Data Fim"
-            android:focusable="false"
-            android:inputType="none"
-            android:padding="8dp"
-            android:layout_marginTop="8dp" />
+            <EditText
+                android:id="@+id/editDataInicio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data Início"
+                android:focusable="false"
+                android:inputType="none"
+                android:padding="8dp"
+                android:layout_marginEnd="4dp" />
+
+            <EditText
+                android:id="@+id/editDataFim"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data Fim"
+                android:focusable="false"
+                android:inputType="none"
+                android:padding="8dp"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/editCriadoPor"

@@ -34,7 +34,7 @@ public class Tela_Relatorio extends AppCompatActivity {
 
     private AutoCompleteTextView filtroProduto;
     private Button btnCriarRelatorio;
-    private ImageButton botaoVoltar;
+    ImageButton botaoVoltar;
     private RecyclerView recyclerRelatorios;
 
     private DatabaseReference databaseProdutos;
@@ -42,7 +42,6 @@ public class Tela_Relatorio extends AppCompatActivity {
 
     private ArrayAdapter<String> adapterProdutos;
     private List<String> listaNomesProdutos = new ArrayList<>();
-
     private List<Relatorio> listaRelatorios = new ArrayList<>();
     private RelatorioAdapter adapterRelatorios;
 
@@ -56,7 +55,7 @@ public class Tela_Relatorio extends AppCompatActivity {
 
         filtroProduto = findViewById(R.id.filtroProduto);
         btnCriarRelatorio = findViewById(R.id.btnCriarRelatorio);
-        botaoVoltar = findViewById(R.id.botao_voltar_relatorio);
+        botaoVoltar = findViewById(R.id.btnVoltar);
         recyclerRelatorios = findViewById(R.id.recyclerRelatorios);
 
         databaseProdutos = FirebaseDatabase.getInstance().getReference("produtos");
@@ -208,7 +207,63 @@ public class Tela_Relatorio extends AppCompatActivity {
             holder.text1.setText("Produto: " + rel.getProduto() + " (" + rel.getDataInicio() + " até " + rel.getDataFim() + ")");
             String criadoPor = (rel.getCriadoPor() == null || rel.getCriadoPor().isEmpty()) ? "Desconhecido" : rel.getCriadoPor();
             holder.text2.setText("Criado por: " + criadoPor + " em " + rel.getDataCriacao());
+
+            // Exibir Loading ou texto provisório enquanto busca movimentações
+            holder.text2.append("\nCarregando dados do relatório...");
+
+            DatabaseReference databaseMovimentacoes = FirebaseDatabase.getInstance().getReference("movimentacoes");
+            databaseMovimentacoes.orderByChild("produto").equalTo(rel.getProduto())
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int totalEntradas = 0;
+                            int totalSaidas = 0;
+
+                            // Converter datas do relatório para comparar
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            long dataInicioMs = 0, dataFimMs = 0;
+                            try {
+                                dataInicioMs = sdf.parse(rel.getDataInicio()).getTime();
+                                dataFimMs = sdf.parse(rel.getDataFim()).getTime();
+                            } catch (Exception e) {
+                                // erro no parse - você pode tratar
+                            }
+
+                            for (DataSnapshot mov : snapshot.getChildren()) {
+                                String tipo = mov.child("tipo").getValue(String.class);
+                                String dataStr = mov.child("data").getValue(String.class);
+                                Integer quantidade = mov.child("quantidade").getValue(Integer.class);
+
+                                if (tipo == null || dataStr == null || quantidade == null) continue;
+
+                                try {
+                                    long dataMovMs = sdf.parse(dataStr).getTime();
+                                    // Verifica se a movimentação está dentro do período do relatório
+                                    if (dataMovMs >= dataInicioMs && dataMovMs <= dataFimMs) {
+                                        if (tipo.equalsIgnoreCase("entrada")) {
+                                            totalEntradas += quantidade;
+                                        } else if (tipo.equalsIgnoreCase("saida")) {
+                                            totalSaidas += quantidade;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    // erro parse data movimentação
+                                }
+                            }
+
+                            // Atualiza a UI com os dados somados
+                            holder.text2.setText("Criado por: " + criadoPor + " em " + rel.getDataCriacao() +
+                                    "\nTotal entradas: " + totalEntradas +
+                                    "\nTotal saídas: " + totalSaidas);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            holder.text2.setText("Erro ao carregar dados do relatório.");
+                        }
+                    });
         }
+
 
         @Override
         public int getItemCount() {

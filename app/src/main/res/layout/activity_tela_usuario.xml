@@ -9,6 +9,7 @@
     android:background="@drawable/estilo_background_login"
     tools:context=".Tela_Usuario">
 
+    <!-- Botão Voltar -->
     <ImageButton
         android:id="@+id/btn_voltar"
         android:layout_width="48dp"
@@ -16,36 +17,56 @@
         android:src="@drawable/ic_back_button"
         android:background="@android:color/transparent"
         android:contentDescription="Botão Voltar"
-        android:padding="0dp"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Ícone centralizado -->
     <ImageView
         android:id="@+id/logo_user"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toTopOf="@id/container_usuario"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:src="@drawable/ic_person"
+        android:contentDescription="Ícone de usuário"
         app:tint="@color/white"
-        />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_voltar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Texto "USUÁRIO LOGADO:" -->
+    <TextView
+        android:id="@+id/texto_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USUÁRIO LOGADO:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/logo_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Container branco com nome e email do usuário -->
     <LinearLayout
         android:id="@+id/container_usuario"
-        android:layout_width="400dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
         android:background="@drawable/estilo_container_branco"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="20dp"
+        android:elevation="6dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintTop_toBottomOf="@id/texto_usuario"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="200dp">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/nome_usuario"
@@ -53,9 +74,10 @@
             android:layout_height="wrap_content"
             android:text="Usuário: ---"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:fontFamily="monospace" />
+            android:fontFamily="monospace"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/email_usuario"
@@ -63,13 +85,11 @@
             android:layout_height="wrap_content"
             android:text="Email: ---"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="monospace"
-            android:layout_marginTop="8dp" />
-
+            android:textSize="18sp"
+            android:fontFamily="monospace" />
     </LinearLayout>
 
+    <!-- Botão Alterar Dados -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_alterar_dados"
         android:layout_width="wrap_content"
@@ -79,11 +99,12 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:drawableStart="@drawable/button_usuario_icon"
+        android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@id/container_usuario"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Botão Desconectar -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_desconectar"
         android:layout_width="wrap_content"
@@ -93,9 +114,9 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:drawableStart="@drawable/ic_quit"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/btn_alterar_dados"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

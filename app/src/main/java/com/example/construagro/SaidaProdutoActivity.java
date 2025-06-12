@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +37,14 @@ public class SaidaProdutoActivity extends AppCompatActivity {
     private AutoCompleteTextView autoCompleteTextViewProduto;
     private TextView textViewQuantidadeAtual, textViewQuantidadeRestante;
     private EditText editTextQuantidadeSaida;
+    private ImageButton botaoVoltar;
+
     private Button buttonAdicionarSaida, buttonConfirmarTodasSaidas;
     private RecyclerView recyclerViewSaidas;
 
     private DatabaseReference databaseRef;
+    private DatabaseReference saidasRef;
+
     private List<Produto> listaProdutos = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private String usuarioAtual;
@@ -57,6 +62,7 @@ public class SaidaProdutoActivity extends AppCompatActivity {
         usuarioAtual = user != null ? user.getDisplayName() : "Administrador";
 
         databaseRef = FirebaseDatabase.getInstance().getReference("produtos");
+        saidasRef = FirebaseDatabase.getInstance().getReference("saidas");
 
         // Inicializa componentes
         autoCompleteTextViewProduto = findViewById(R.id.autoCompleteTextViewProduto);
@@ -66,6 +72,9 @@ public class SaidaProdutoActivity extends AppCompatActivity {
         buttonAdicionarSaida = findViewById(R.id.buttonAdicionarSaida);
         buttonConfirmarTodasSaidas = findViewById(R.id.buttonConfirmarTodasSaidas);
         recyclerViewSaidas = findViewById(R.id.recyclerViewSaidas);
+        botaoVoltar = findViewById(R.id.botao_voltar);
+        botaoVoltar.setOnClickListener(v -> finish());
+
 
         // Configura RecyclerView
         recyclerViewSaidas.setLayoutManager(new LinearLayoutManager(this));
@@ -205,6 +214,19 @@ public class SaidaProdutoActivity extends AppCompatActivity {
                         produto.getHistorico().add(movimentacao);
 
                         refProduto.setValue(produto);
+
+                        // Registra saída separadamente para consulta por data
+                        String novaSaidaId = saidasRef.push().getKey();
+
+                        SaidaRegistro saidaRegistro = new SaidaRegistro(
+                                saida.getIdProduto(),
+                                saida.getNomeProduto(),
+                                saida.getQuantidade(),
+                                usuarioAtual,
+                                dataAtual
+                        );
+
+                        saidasRef.child(novaSaidaId).setValue(saidaRegistro);
                     }
                 }
 
@@ -217,14 +239,12 @@ public class SaidaProdutoActivity extends AppCompatActivity {
             });
         }
 
-
         Toast.makeText(this, "Saídas confirmadas!", Toast.LENGTH_SHORT).show();
         listaSaidas.clear();
         saidaAdapter.notifyDataSetChanged();
         recyclerViewSaidas.setVisibility(View.GONE);
         buttonConfirmarTodasSaidas.setVisibility(View.GONE);
     }
-
 
     private void carregarProdutos() {
         databaseRef.addValueEventListener(new ValueEventListener() {
@@ -257,7 +277,7 @@ public class SaidaProdutoActivity extends AppCompatActivity {
     }
 }
 
-// Classe Saida (adicione como uma classe separada ou interna)
+// Classe Saida (pode ficar em arquivo separado ou como classe interna)
 class Saida {
     private String idProduto;
     private String nomeProduto;
@@ -276,16 +296,49 @@ class Saida {
         this.quantidadeRestante = quantidadeRestante;
     }
 
-    // Getters
-    public String getIdProduto() { return idProduto; }
-    public String getNomeProduto() { return nomeProduto; }
-    public int getQuantidade() { return quantidade; }
-    public int getQuantidadeAnterior() { return quantidadeAnterior; }
-    public int getQuantidadeRestante() { return quantidadeRestante; }
+    public String getIdProduto() {
+        return idProduto;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public int getQuantidadeAnterior() {
+        return quantidadeAnterior;
+    }
+
+    public int getQuantidadeRestante() {
+        return quantidadeRestante;
+    }
 }
 
-// Classe SaidaAdapter (adicione como uma classe separada ou interna)
+// Classe para salvar as saídas no nó "saidas" no Firebase
+class SaidaRegistro {
+    public String idProduto;
+    public String nomeProduto;
+    public int quantidade;
+    public String usuario;
+    public String data;
+
+    public SaidaRegistro() {}
+
+    public SaidaRegistro(String idProduto, String nomeProduto, int quantidade, String usuario, String data) {
+        this.idProduto = idProduto;
+        this.nomeProduto = nomeProduto;
+        this.quantidade = quantidade;
+        this.usuario = usuario;
+        this.data = data;
+    }
+}
+
+// Adapter para RecyclerView das saídas
 class SaidaAdapter extends RecyclerView.Adapter<SaidaAdapter.SaidaViewHolder> {
+
     private List<Saida> listaSaidas;
 
     public SaidaAdapter(List<Saida> listaSaidas) {
@@ -296,20 +349,17 @@ class SaidaAdapter extends RecyclerView.Adapter<SaidaAdapter.SaidaViewHolder> {
     @Override
     public SaidaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_saida, parent, false);
+                .inflate(android.R.layout.simple_list_item_2, parent, false);
         return new SaidaViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SaidaViewHolder holder, int position) {
         Saida saida = listaSaidas.get(position);
-        holder.textViewProduto.setText(saida.getNomeProduto());
-        holder.textViewQuantidade.setText(String.format(
-                "Retirada: %d (De %d para %d)",
-                saida.getQuantidade(),
-                saida.getQuantidadeAnterior(),
-                saida.getQuantidadeRestante()
-        ));
+        holder.text1.setText(saida.getNomeProduto());
+        holder.text2.setText("Saída: " + saida.getQuantidade() +
+                " | Antes: " + saida.getQuantidadeAnterior() +
+                " | Restante: " + saida.getQuantidadeRestante());
     }
 
     @Override
@@ -318,12 +368,13 @@ class SaidaAdapter extends RecyclerView.Adapter<SaidaAdapter.SaidaViewHolder> {
     }
 
     static class SaidaViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewProduto, textViewQuantidade;
+        TextView text1;
+        TextView text2;
 
         public SaidaViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewProduto = itemView.findViewById(R.id.textViewProduto);
-            textViewQuantidade = itemView.findViewById(R.id.textViewQuantidade);
+            text1 = itemView.findViewById(android.R.id.text1);
+            text2 = itemView.findViewById(android.R.id.text2);
         }
     }
 }

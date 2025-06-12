@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Produto {
+
     private String id;
     private String nome;
     private int quantidade;
     private String categoria;
     private double valor;
-    private String dataCadastro;
-    private String usuarioCadastro;
-    private List<Movimentacao> historico;
+    private String dataCadastro;      // Data de cadastro (ex: "09/11/2024 14:30")
+    private String usuarioCadastro;   // Quem cadastrou o produto
+    private List<Movimentacao> historico;  // Histórico de movimentações
 
+    // Construtor vazio obrigatório para Firebase
     public Produto() {
         this.historico = new ArrayList<>();
     }
 
-    public Produto(String nome, int quantidade, String categoria,
-                   double valor, String dataCadastro, String usuarioCadastro) {
+    // Construtor usado para novo produto
+    public Produto(String nome, int quantidade, String categoria, double valor,
+                   String dataCadastro, String usuarioCadastro) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.categoria = categoria;
@@ -26,77 +29,133 @@ public class Produto {
         this.dataCadastro = dataCadastro;
         this.usuarioCadastro = usuarioCadastro;
         this.historico = new ArrayList<>();
-
-        this.historico.add(new Movimentacao(
-                quantidade,
-                "Cadastro inicial",
-                usuarioCadastro,
-                dataCadastro
-        ));
     }
 
+    // Getters e Setters
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public String getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(String dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public String getUsuarioCadastro() {
+        return usuarioCadastro;
+    }
+
+    public void setUsuarioCadastro(String usuarioCadastro) {
+        this.usuarioCadastro = usuarioCadastro;
+    }
+
+    public List<Movimentacao> getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(List<Movimentacao> historico) {
+        this.historico = historico;
+    }
+
+    // Classe interna para movimentação de estoque
     public static class Movimentacao {
         private int quantidade;
-        private String tipo;
+        private String tipo;         // "Entrada" ou "Saída"
         private String usuario;
         private String data;
-        private String observacao;
+        private String descricao;
 
+        // Construtor vazio obrigatório para Firebase
         public Movimentacao() {}
 
-        public Movimentacao(int quantidade, String tipo, String usuario, String data) {
+        public Movimentacao(int quantidade, String tipo, String usuario, String data, String descricao) {
             this.quantidade = quantidade;
             this.tipo = tipo;
             this.usuario = usuario;
             this.data = data;
-            this.observacao = "";
+            this.descricao = descricao;
         }
 
-        public Movimentacao(int quantidade, String tipo, String usuario, String data, String observacao) {
+        // Getters e Setters
+
+        public int getQuantidade() {
+            return quantidade;
+        }
+
+        public void setQuantidade(int quantidade) {
             this.quantidade = quantidade;
-            this.tipo = tipo;
-            this.usuario = usuario;
-            this.data = data;
-            this.observacao = observacao;
         }
 
-        public int getQuantidade() { return quantidade; }
-        public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+        public String getTipo() {
+            return tipo;
+        }
 
-        public String getTipo() { return tipo; }
-        public void setTipo(String tipo) { this.tipo = tipo; }
+        public void setTipo(String tipo) {
+            this.tipo = tipo;
+        }
 
-        public String getUsuario() { return usuario; }
-        public void setUsuario(String usuario) { this.usuario = usuario; }
+        public String getUsuario() {
+            return usuario;
+        }
 
-        public String getData() { return data; }
-        public void setData(String data) { this.data = data; }
+        public void setUsuario(String usuario) {
+            this.usuario = usuario;
+        }
 
-        public String getObservacao() { return observacao; }
-        public void setObservacao(String observacao) { this.observacao = observacao; }
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+
+        public String getDescricao() {
+            return descricao;
+        }
+
+        public void setDescricao(String descricao) {
+            this.descricao = descricao;
+        }
     }
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public int getQuantidade() { return quantidade; }
-    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
-
-    public String getCategoria() { return categoria; }
-    public void setCategoria(String categoria) { this.categoria = categoria; }
-
-    public double getValor() { return valor; }
-    public void setValor(double valor) { this.valor = valor; }
-
-    public String getDataCadastro() { return dataCadastro; }
-    public void setDataCadastro(String dataCadastro) { this.dataCadastro = dataCadastro; }
-
-    public String getUsuarioCadastro() { return usuarioCadastro; }
-    public void setUsuarioCadastro(String usuarioCadastro) { this.usuarioCadastro = usuarioCadastro; }
-
-    public List<Movimentacao> getHistorico() { return historico; }
-    public void setHistorico(List<Movimentacao> historico) { this.historico = historico; }
 }
