@@ -126,8 +126,10 @@ public class Tela_Menu extends AppCompatActivity {
         botaoCadastrar.setOnClickListener(v ->
                 startActivity(new Intent(Tela_Menu.this, CadastroProdutoActivity.class)));
 
-        botaoSaida.setOnClickListener(v ->
-                Toast.makeText(this, "Saída de Itens - em desenvolvimento", Toast.LENGTH_SHORT).show());
+        botaoSaida.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SaidaProdutoActivity.class);
+            startActivity(intent);
+        });
 
         botaoRelatorio.setOnClickListener(v ->
                 Toast.makeText(this, "Relatórios - em desenvolvimento", Toast.LENGTH_SHORT).show());

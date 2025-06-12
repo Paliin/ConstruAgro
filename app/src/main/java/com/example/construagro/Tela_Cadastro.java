@@ -29,12 +29,13 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Tela_Cadastro extends AppCompatActivity {
 
-    // criando as credenciais pra salvar no firebase
     private EditText nome_usuario, email_usuario, senha_usuario;
     private Button criar_cadastro;
 
@@ -60,7 +61,6 @@ public class Tela_Cadastro extends AppCompatActivity {
                 String email = email_usuario.getText().toString().trim();
                 String senha = senha_usuario.getText().toString().trim();
 
-                // VERIFICANDO CAMPOS
                 if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
                     Snackbar snackbar = Snackbar.make(V, "Preencha todos os campos!", Snackbar.LENGTH_SHORT);
                     snackbar.setBackgroundTint(Color.WHITE);
@@ -76,14 +76,11 @@ public class Tela_Cadastro extends AppCompatActivity {
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Volta para a tela anterior
-                finish();
+                finish(); // Volta para a tela anterior
             }
         });
-
     }
 
-    // CADASTRO NO FIREBASE
     private void CadastrarUsuario(View V, String email, String senha) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -98,12 +95,11 @@ public class Tela_Cadastro extends AppCompatActivity {
                             snackbar.setTextColor(Color.BLACK);
                             snackbar.show();
 
-                            // Ir para Tela_Menu após 1 segundo para dar tempo de mostrar o Snackbar
                             V.postDelayed(() -> {
                                 Intent intent = new Intent(Tela_Cadastro.this, Tela_Menu.class);
                                 startActivity(intent);
-                                finish(); // Finaliza a tela de cadastro
-                            }, 1000); // 1000ms = 1 segundo
+                                finish();
+                            }, 1000);
 
                         } else {
                             String erro;
@@ -114,43 +110,48 @@ public class Tela_Cadastro extends AppCompatActivity {
                             } catch (FirebaseAuthUserCollisionException e) {
                                 erro = "Este E-mail já está sendo utilizado";
                             } catch (FirebaseAuthInvalidCredentialsException e) {
-                                erro = "O formato do E-mail é invalido";
+                                erro = "O formato do E-mail é inválido";
                             } catch (Exception e) {
-                                erro = "Erro ao Cadastrar Usúario";
+                                erro = "Erro ao cadastrar usuário";
                             }
                             Snackbar snackbar = Snackbar.make(V, erro, Snackbar.LENGTH_SHORT);
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
                             snackbar.show();
-
                         }
                     }
                 });
     }
 
-    //a função salva o nome e ID do usuario no Firebase
-    private void SalvarDadosUsuario(){ // salvar dados no firebase do nome do usuario
+    private void SalvarDadosUsuario() {
         String nome = nome_usuario.getText().toString();
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail(); // pega o e-mail do usuário atual
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> usuarios = new HashMap<>();
         usuarios.put("nome", nome);
         usuarios.put("email", email);
 
-        String usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid(); // pega o ID do usuário atual
+        // Adicionando data de cadastro
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String dataCadastro = sdf.format(new Date());
+        usuarios.put("dataCadastro", dataCadastro);
+
+        String usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
-        documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("db", "Sucesso ao salvar os dados");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("db_error", "Erro ao salvar os dados" + e.toString());
-            }
-        });
+        documentReference.set(usuarios)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("db", "Sucesso ao salvar os dados");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("db_error", "Erro ao salvar os dados: " + e.toString());
+                    }
+                });
     }
 
     private void IniciarComponents() {
@@ -159,6 +160,4 @@ public class Tela_Cadastro extends AppCompatActivity {
         senha_usuario = findViewById(R.id.Senha_usuario);
         criar_cadastro = findViewById(R.id.Bt_criar_cadastro);
     }
-
-
 }
