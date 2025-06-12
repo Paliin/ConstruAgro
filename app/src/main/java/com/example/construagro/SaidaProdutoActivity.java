@@ -180,45 +180,51 @@ public class SaidaProdutoActivity extends AppCompatActivity {
         String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
 
         for (Saida saida : listaSaidas) {
-            databaseRef.child(saida.getIdProduto()).addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference refProduto = databaseRef.child(saida.getIdProduto());
+
+            refProduto.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Produto produto = snapshot.getValue(Produto.class);
                     if (produto != null) {
-                        // Atualiza quantidade
-                        produto.setQuantidade(saida.getQuantidadeRestante());
+                        produto.setId(snapshot.getKey());
+                        int novaQuantidade = produto.getQuantidade() - saida.getQuantidade();
 
-                        // Registra movimentação
-                        Produto.Movimentacao mov = new Produto.Movimentacao(
+                        Produto.Movimentacao movimentacao = new Produto.Movimentacao(
                                 saida.getQuantidade(),
                                 "Saída",
                                 usuarioAtual,
                                 dataAtual,
-                                "Saída múltipla"
+                                "Saída registrada via app"
                         );
 
+                        produto.setQuantidade(novaQuantidade);
                         if (produto.getHistorico() == null) {
                             produto.setHistorico(new ArrayList<>());
                         }
-                        produto.getHistorico().add(mov);
+                        produto.getHistorico().add(movimentacao);
 
-                        // Salva no Firebase
-                        databaseRef.child(saida.getIdProduto()).setValue(produto);
+                        refProduto.setValue(produto);
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     Toast.makeText(SaidaProdutoActivity.this,
-                            "Erro ao atualizar produto: " + saida.getNomeProduto(),
+                            "Erro ao salvar saída: " + error.getMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
         }
 
-        Toast.makeText(this, "Todas as saídas foram registradas!", Toast.LENGTH_LONG).show();
-        finish();
+
+        Toast.makeText(this, "Saídas confirmadas!", Toast.LENGTH_SHORT).show();
+        listaSaidas.clear();
+        saidaAdapter.notifyDataSetChanged();
+        recyclerViewSaidas.setVisibility(View.GONE);
+        buttonConfirmarTodasSaidas.setVisibility(View.GONE);
     }
+
 
     private void carregarProdutos() {
         databaseRef.addValueEventListener(new ValueEventListener() {

@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Produto {
-    private String id; // Novo campo para armazenar o ID do Firebase
+    private String id;
     private String nome;
     private int quantidade;
     private String categoria;
     private double valor;
     private String dataCadastro;
-    private String usuarioCadastro; // Quem cadastrou o produto
-    private List<Movimentacao> historico; // Histórico de alterações
+    private String usuarioCadastro;
+    private List<Movimentacao> historico;
 
-    // Construtor vazio exigido pelo Firebase
     public Produto() {
         this.historico = new ArrayList<>();
     }
 
-    // Construtor principal atualizado
     public Produto(String nome, int quantidade, String categoria,
                    double valor, String dataCadastro, String usuarioCadastro) {
         this.nome = nome;
@@ -29,7 +27,6 @@ public class Produto {
         this.usuarioCadastro = usuarioCadastro;
         this.historico = new ArrayList<>();
 
-        // Adiciona a movimentação inicial
         this.historico.add(new Movimentacao(
                 quantidade,
                 "Cadastro inicial",
@@ -38,7 +35,6 @@ public class Produto {
         ));
     }
 
-    // Classe interna para representar as movimentações
     public static class Movimentacao {
         private int quantidade;
         private String tipo;
@@ -46,10 +42,8 @@ public class Produto {
         private String data;
         private String observacao;
 
-        // Construtor vazio obrigatório para Firebase
         public Movimentacao() {}
 
-        // Construtor com 4 parâmetros
         public Movimentacao(int quantidade, String tipo, String usuario, String data) {
             this.quantidade = quantidade;
             this.tipo = tipo;
@@ -58,7 +52,6 @@ public class Produto {
             this.observacao = "";
         }
 
-        // Construtor com 5 parâmetros (novo)
         public Movimentacao(int quantidade, String tipo, String usuario, String data, String observacao) {
             this.quantidade = quantidade;
             this.tipo = tipo;
@@ -67,7 +60,6 @@ public class Produto {
             this.observacao = observacao;
         }
 
-        // Getters e Setters (obrigatórios para Firebase)
         public int getQuantidade() { return quantidade; }
         public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
 
@@ -84,7 +76,6 @@ public class Produto {
         public void setObservacao(String observacao) { this.observacao = observacao; }
     }
 
-    // Getters e Setters (adicionados os novos campos)
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

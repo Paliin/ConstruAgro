@@ -24,7 +24,6 @@
         <activity android:name=".Tela_Cadastro" android:exported="false" />
         <activity android:name=".Tela_Alterar_Dados_Usuario" android:exported="false" />
         <activity android:name=".Tela_Relatorio" android:exported="false" />
-        <activity android:name=".Tela_CriarRelatorio" android:exported="false" />
         <activity android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

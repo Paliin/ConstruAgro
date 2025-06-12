@@ -35,7 +35,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     private Button buttonSalvar;
     private ImageButton btnVoltar;
     private DatabaseReference databaseRef;
-
     private List<Produto> listaProdutos = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private String usuarioAtual; // Usuário logado atual

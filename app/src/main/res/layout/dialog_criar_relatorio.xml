@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Produto"
+            android:inputType="text"
+            android:padding="8dp" />
+
+        <EditText
+            android:id="@+id/editDataInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data Início"
+            android:focusable="false"
+            android:inputType="none"
+            android:padding="8dp"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/editDataFim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data Fim"
+            android:focusable="false"
+            android:inputType="none"
+            android:padding="8dp"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/editCriadoPor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quem cadastrou (opcional)"
+            android:inputType="text"
+            android:padding="8dp"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</ScrollView>
