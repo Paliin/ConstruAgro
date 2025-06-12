@@ -131,8 +131,10 @@ public class Tela_Menu extends AppCompatActivity {
             startActivity(intent);
         });
 
-        botaoRelatorio.setOnClickListener(v ->
-                Toast.makeText(this, "Relatórios - em desenvolvimento", Toast.LENGTH_SHORT).show());
+        botaoRelatorio.setOnClickListener(v -> {
+            Intent intent = new Intent(Tela_Menu.this, Tela_Relatorio.class);
+            startActivity(intent);
+        });
     }
 
     private void carregarProdutosFirebase() {

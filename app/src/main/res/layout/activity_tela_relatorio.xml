@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- Toolbar azul no topo -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/DarkBlue"
+        android:title="Relatórios"
+        android:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <!-- Botão de voltar personalizado ancorado na Toolbar -->
+    <ImageButton
+        android:id="@+id/botao_voltar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_back_button"
+        android:scaleType="fitCenter"
+        android:contentDescription="Voltar"
+        android:elevation="8dp"
+        app:layout_anchor="@id/toolbar"
+        app:layout_anchorGravity="start|center_vertical" />
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RELATÓRIOS"
+            android:textColor="@color/DarkBlue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/edtNomeFiltro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do Relatório"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edtCadastroPorFiltro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cadastrado por"
+            android:inputType="text"
+            android:layout_marginTop="8dp" />
+
+        <!-- Linha com duas datas lado a lado -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/edtDataInicioFiltro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data Início"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="textNoSuggestions"
+                android:drawableEnd="@drawable/ic_calendar"
+                android:layout_marginEnd="8dp" />
+
+            <EditText
+                android:id="@+id/edtDataFimFiltro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data Fim"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="textNoSuggestions"
+                android:drawableEnd="@drawable/ic_calendar" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnFiltrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filtrar"
+            android:layout_marginTop="16dp"
+            android:textSize="18dp"
+            android:backgroundTint="@color/DarkBlue"
+            android:textColor="@android:color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewRelatorios"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnNovoRelatorio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Novo Relatório"
+            android:layout_marginTop="24dp"
+            android:textSize="18dp"
+            android:backgroundTint="@color/DarkBlue"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnExportarPdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exportar PDF"
+            android:layout_marginTop="8dp"
+            android:textSize="18dp"
+            android:backgroundTint="@color/DarkBlue"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

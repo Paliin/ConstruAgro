@@ -54,7 +54,7 @@
     <EditText
         android:id="@+id/login_senha"
         android:hint="Senha"
-        android:drawableEnd="@drawable/ic_eye"
+        android:drawableEnd="@drawable/ic_lock"
         style="@style/Edit_text"
         android:inputType="textPassword"
         android:maxLines="1"

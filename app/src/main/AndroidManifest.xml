@@ -19,14 +19,16 @@
 
         <activity android:name=".CadastroProdutoActivity" android:exported="false" />
         <activity android:name=".SaidaProdutoActivity" android:exported="false" />
-        <activity android:name=".Tela_Menu" android:exported="false" />
+        <activity android:name=".Tela_Login" android:exported="false" />
         <activity android:name=".Tela_Usuario" android:exported="false" />
         <activity android:name=".Tela_Cadastro" android:exported="false" />
         <activity android:name=".Tela_Alterar_Dados_Usuario" android:exported="false" />
+        <activity android:name=".Tela_Relatorio" android:exported="false" />
+        <activity android:name=".Tela_CriarRelatorio" android:exported="false" />
         <activity android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity android:name=".Tela_Login"
+        <activity android:name=".Tela_Menu"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -36,6 +38,7 @@
         </activity>
 
     </application>
+
 
 
 </manifest>
